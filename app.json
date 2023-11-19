@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Quiz",
+    "slug": "quiz",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/photos/Icon.png",
+    "splash": {
+      "image": "./assets/photos/Logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/photos/Icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/photos/Icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6aa7541a-888d-4123-a4a5-493df625a6d1"
+      }
+    },
+    "owner": "hamedamiri"
+  }
+}

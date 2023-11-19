@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "native-base";
+import { FlatList, View } from "native-base";
 import CartHome from "../../components/CartHome";
 import { StyleSheet } from "react-native";
 import pallete from "../../utils/theme/pallete";
@@ -18,13 +18,15 @@ const Home = () => {
       });
   }, []);
 
-  return <Container style={{ alineItem: "center" }}>
-    { data &&
-      data.map((e, index) => {
-        if (index < 10) return <CartHome
-         data={e}
-    />
-      })
+  return <Container>
+    {data &&
+      
+      <FlatList style={{width: '100%'}} showsVerticalScrollIndicator={false} data={data.slice(0 , 20)} renderItem={({item}) => <CartHome data={item} />} />
+    //   data.map((e, index) => {
+    //     if (index < 10) return <CartHome
+    //      data={e}
+    // />
+    //   })
     }
 
 

@@ -13,6 +13,8 @@ import moment from "jalali-moment";
 const CartHome = (props) => {
     const [data, setData] = useState(props.data);
     const [time, setTime] = useState();
+
+
     // const [avatarlist, setAvatarlist] = useState({});
 
    
@@ -42,9 +44,9 @@ const CartHome = (props) => {
                     {  data.avatars.map((e, i) => {
            return <Avatar style={{ border: "unset" }} bg="green.505" source={{
                  uri: e
-             }}>
+             }} />
                  
-             </Avatar> 
+            
              
          })
                         

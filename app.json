@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/photos/Icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.hamedamiri.quiz"
     },
     "web": {
       "favicon": "./assets/photos/Icon.png"

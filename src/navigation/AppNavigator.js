@@ -10,22 +10,22 @@ import Setting from "../screens/user/Setting";
 const GuestStack = createNativeStackNavigator();
 const UserStack = createNativeStackNavigator();
 
-const GuestNavigator = () => {
-  return (
-    <GuestStack.Navigator screenOptions={{ headerShown: false }}>
-      <GuestStack.Screen name="Phone" component={Phone} />
-      <GuestStack.Screen name="Register" component={Register} />
-      <GuestStack.Screen name="Login" component={Login} />
-    </GuestStack.Navigator>
-  );
-};
+// const GuestNavigator = () => {
+//   return (
+//     <GuestStack.Navigator screenOptions={{ headerShown: false }}>
+//       <GuestStack.Screen name="Phone" component={Phone} />
+//       <GuestStack.Screen name="Register" component={Register} />
+//       <GuestStack.Screen name="Login" component={Login} />
+//     </GuestStack.Navigator>
+//   );
+// };
 
 const UserNavigator = () => {
   return (
     <UserStack.Navigator screenOptions={{ headerShown: false }}>
       <UserStack.Screen name="Home" component={Home} />
-      <UserStack.Screen name="Quiz" component={Quiz} />
-      <UserStack.Screen name="Setting" component={Setting} />
+      {/* <UserStack.Screen name="Quiz" component={Quiz} />
+      <UserStack.Screen name="Setting" component={Setting} /> */}
     </UserStack.Navigator>
   );
 };

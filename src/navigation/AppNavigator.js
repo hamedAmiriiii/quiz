@@ -24,8 +24,8 @@ const UserNavigator = () => {
   return (
     <UserStack.Navigator screenOptions={{ headerShown: false }}>
       <UserStack.Screen name="Home" component={Home} />
-      {/* <UserStack.Screen name="Quiz" component={Quiz} />
-      <UserStack.Screen name="Setting" component={Setting} /> */}
+      <UserStack.Screen name="Quiz" component={Quiz} />
+      {/* <UserStack.Screen name="Setting" component={Setting} /> */}
     </UserStack.Navigator>
   );
 };

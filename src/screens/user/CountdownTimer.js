@@ -1,31 +1,134 @@
-import { View ,Text } from 'native-base';
-import React, { useState, useEffect } from 'react';
+import moment from "jalali-moment";
+import { Center, HStack } from "native-base";
+import React, { useEffect, useState } from "react";
+import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+import pallete from "../../utils/theme/pallete";
+// import "./styles.css";
 
-const CountdownTimer = (props) => {
-  const [time, setTime] = useState(props.timer); // 2 minutes in seconds
+const minuteSeconds = 60;
+const hourSeconds = 3600;
+const daySeconds = 86400;
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (time > 0) {
-        setTime(time - 1);
-      } else {
-        props.startGame()
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [time]);
+const timerProps = {
+  isPlaying: true,
+  size: 120,
+  strokeWidth: 6
+};
 
-  const hour = Math.floor(time % 86400 / 3600);
-  const minutes = Math.floor(time  % 3600 / 60);
-  const seconds = time % 60;
-
+const renderTime = (dimension, time) => {
   return (
-    <View>
-      <h3> تا شروع </h3>
-      <Text fontSize="20" padding="3"
-      >{`${hour.toString().padStart(2, '0')} : ${minutes.toString().padStart(2, '0')}: ${seconds.toString().padStart(2, '0')}`}</Text>
-    </View>
+    <div className="time-wrapper">
+      <div className="time">{time}</div>
+      <div>{dimension}</div>
+    </div>
   );
 };
 
-export default CountdownTimer;
+const getTimeSeconds = (time) => (minuteSeconds - time) | 0;
+const getTimeMinutes = (time) => ((time % hourSeconds) / minuteSeconds) | 0;
+const getTimeHours = (time) => ((time % daySeconds) / hourSeconds) | 0;
+const getTimeDays = (time) => (time / daySeconds) | 0;
+
+  
+
+export default function App(props) {
+  const [endTime1, setEndTime1] = useState(false);
+  const [decriment, setDecriment] = useState( props.start - moment().unix() / 1000);
+  const stratTime = Date.now() / 1000; // use UNIX timestamp in seconds
+  const endTime = props.start
+  const interval = () => {
+    
+    setEndTime1(false);
+    let timer =(props.start - moment().unix())
+    console.log("timeeeeeeeeeeeer1" , props.start);
+
+    console.log("timeeeeeeeeeeeeruni" , moment().unix());
+    console.log("timeeeeeeeeeeeer" , timer);
+    const myInterval = setInterval(function () {
+      
+      if (timer > 0) {
+        timer -= 1;
+        setDecriment(timer);
+      } else {
+        clearInterval(myInterval);
+        setEndTime1(true);
+        props.startGame()
+      }
+    }, 1000);
+  };
+
+  useEffect(() => {
+interval()
+  }, []);
+
+  const remainingTime = endTime - stratTime;
+  const days = Math.ceil(remainingTime / daySeconds);
+  const daysDuration = days * daySeconds;
+
+  return (
+
+    <HStack space={3}  alignItems='center'>
+      {/* <CountdownCircleTimer
+        {...timerProps}
+        colors="#7E2E84"
+        duration={daysDuration}
+        initialRemainingTime={remainingTime}
+        size={60}
+      >
+        {({ elapsedTime, color }) => (
+          <span style={{ color }}>
+            {renderTime("days", getTimeDays(daysDuration - elapsedTime))}
+          </span>
+        )}
+      </CountdownCircleTimer> */}
+      { remainingTime % daySeconds > 1 ||remainingTime % daySeconds == 1  && <CountdownCircleTimer
+        {...timerProps}
+        colors='#6cc4f0'
+        duration={daySeconds}
+        initialRemainingTime={remainingTime % daySeconds}
+        size={70}
+        onComplete={(totalElapsedTime) => ({
+          shouldRepeat: remainingTime - totalElapsedTime > hourSeconds
+        })}
+      >
+        {({ elapsedTime, color }) => (
+          <span style={{ color }}>
+            {renderTime("ساعت", getTimeHours(daySeconds - elapsedTime))}
+          </span>
+        )}
+      </CountdownCircleTimer>}
+      <CountdownCircleTimer
+        {...timerProps}
+        colors='#6cc4f0'
+        duration={hourSeconds}
+        initialRemainingTime={remainingTime % hourSeconds}
+        size={70}
+        onComplete={(totalElapsedTime) => ({
+          shouldRepeat: remainingTime - totalElapsedTime > minuteSeconds
+        })}
+      >
+        {({ elapsedTime, color }) => (
+          <span style={{ color }}>
+            {renderTime("دقیقه", getTimeMinutes(hourSeconds - elapsedTime))}
+          </span>
+        )}
+      </CountdownCircleTimer>
+      <CountdownCircleTimer
+        {...timerProps}
+        colors='#6cc4f0'
+        duration={minuteSeconds}
+        initialRemainingTime={remainingTime % minuteSeconds}
+        size={70}
+        onComplete={(totalElapsedTime) => ({
+          shouldRepeat: remainingTime - totalElapsedTime > 0
+        })}
+      >
+        {({ elapsedTime, color }) => (
+          <span style={{ color }}>
+            {renderTime("ثانیه", getTimeSeconds(elapsedTime))}
+          </span>
+        )}
+      </CountdownCircleTimer>
+    </HStack>
+  );
+}

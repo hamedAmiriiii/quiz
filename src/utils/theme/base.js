@@ -7,9 +7,9 @@ const theme = extendTheme({
     initialColorMode: "dark",
   },
   fonts: {
-    heading: "iransans",
-    body: "iransans",
-    mono: "iransans",
+    heading: "Yekan",
+    body: "Yekan",
+    mono: "Yekan",
   },
   colors: pallete,
 });

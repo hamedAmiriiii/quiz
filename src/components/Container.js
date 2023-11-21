@@ -9,7 +9,7 @@ const Container = ({ children }) => {
     <View h="full"
       w={Platform.OS === 'web' ? "80%" : 'full'}
       m={Platform.OS === 'web' ? 'auto' : '0'}
-      p={4} style={{ alignItems: "center" }} bg="backgrounHome"
+      p={4} style={{ alignItems: "center" }} bg="secondary"
     >
       {children}
     </View>

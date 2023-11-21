@@ -1,10 +1,11 @@
 export default {
-  primary: "#151515",
-  secondary: "#FFC045",
-  info: "#332182",
-  success: "#019267",
-  danger: "#D21312",
-  warning: "#E55807",
-  home: "#80b0fe",
-  backgrounHome: "#e9eeff",
+  primary: "#27374D",
+  secondary: "#64727d",
+  info: "#9DB2BF",
+  text: "#DDE6ED",
+  success: "#159895",
+  danger: "#CD1818",
+  warning: "#FF6D60",
+
+
 };

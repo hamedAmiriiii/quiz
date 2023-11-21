@@ -11,7 +11,7 @@ import * as SplashScreen from 'expo-splash-screen';
 export default function App() {
 
   const [fontLoaded] = useFonts({
-    'IranSans': require('./assets/fonts/Yekan.ttf'),
+    'Yekan': require('./assets/fonts/Yekan.ttf'),
   });
 
 

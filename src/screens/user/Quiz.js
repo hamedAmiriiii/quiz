@@ -44,18 +44,6 @@ const Quiz = () => {
       }
     }, 80);
       
-      
-
-    //  let contt = 0
-    //     const interval = setInterval(() => {
-    //       setCount(prevCount => prevCount + 1);
-    //       contt++
-    //       if (contt == 5 ) {
-    //         return () => clearInterval(interval);
-    //       }
-    //     }, 100);
-
-         
           setAnswerOk(e)
       }else setAnswerOk(e + 4)
 }

@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import pallete from "../../utils/theme/pallete";
 import Container from "../../components/Container";
 import axios from "axios";
+import Header from "../../components/Header";
 const Home = () => {
   const [data, setData] = useState(null);
 
@@ -19,6 +20,7 @@ const Home = () => {
   }, []);
 
   return <Container>
+    <Header/>
     {data &&
       
       <FlatList style={{width: '100%'}} showsVerticalScrollIndicator={false} data={data.slice(0 , 20)} renderItem={({item}) => <CartHome data={item} />} />

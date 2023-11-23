@@ -16,26 +16,33 @@ console.log("ttttttt", props.data.startTime - moment().unix());
    return <Pressable overflow="hidden" w='full'  p={1} justifyContent="center" mt={3} bg="primary" borderRadius={5} onPress={()=>navigate('Quiz' , {id:data.id})}>
         <HStack  justifyContent="space-between" w="full">
          <Center borderRightColor={5}  >
-            
-         <CountdownCircleTimer
-        isPlaying
-   // isGrowing
-        strokeWidth= {4}
-               duration={props.data.startTime - moment().unix()}
-               colors={[pallete.success, pallete.info, pallete.warning, pallete.danger]}
-          colorsTime={[10000 ,300,150, 60, ]}
-        size={80}
-      //   onComplete={(totalElapsedTime) => ({
-      //     shouldRepeat: remainingTime - totalElapsedTime > hourSeconds
-      //   })}
-      >
-               {({ elapsedTime, color }) => (
-                 
-         <Avatar source={{
-            uri: data.image
-        }} alt="Alternate Text"  size="lg" ></Avatar>
-        )}
-            </CountdownCircleTimer>
+            {
+               props.data.startTime - moment().unix() < 600 ? 
+               <CountdownCircleTimer
+               isPlaying
+          // isGrowing
+               strokeWidth= {4}
+                      duration={props.data.startTime - moment().unix()}
+                      colors={[ pallete.danger]}
+                 colorsTime={[600 ]}
+               size={70}
+             //   onComplete={(totalElapsedTime) => ({
+             //     shouldRepeat: remainingTime - totalElapsedTime > hourSeconds
+             //   })}
+             >
+                      {({ elapsedTime, color }) => (
+                        
+                <Avatar source={{
+                   uri: data.image
+               }} alt="Alternate Text"  size="lg" />
+               )}
+                  </CountdownCircleTimer>
+                  :
+                  <Avatar size='lg'  source={{
+                     uri: data.image
+                 }} alt="Alternate Text"   />
+            }
+         
             
 
                 

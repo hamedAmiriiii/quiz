@@ -16,6 +16,7 @@ const timerProps = {
 };
 
 const renderTime = (dimension, time) => {
+
   return (
     <div className="time-wrapper">
       <div className="time">{time}</div>
@@ -40,16 +41,15 @@ export default function App(props) {
     
     setEndTime1(false);
     let timer =(props.start - moment().unix())
-    console.log("timeeeeeeeeeeeer1" , props.start);
-
-    console.log("timeeeeeeeeeeeeruni" , moment().unix());
-    console.log("timeeeeeeeeeeeer" , timer);
+  
+    
     const myInterval = setInterval(function () {
       
       if (timer > 0) {
         timer -= 1;
-        setDecriment(timer);
+        // setDecriment(timer);
       } else {
+        timer =0
         clearInterval(myInterval);
         setEndTime1(true);
         props.startGame()
@@ -88,7 +88,7 @@ interval()
         initialRemainingTime={remainingTime % daySeconds}
         size={70}
         onComplete={(totalElapsedTime) => ({
-          shouldRepeat: remainingTime - totalElapsedTime > hourSeconds
+          shouldRepeat: remainingTime - totalElapsedTime > hourSeconds ,delay: 1.5
         })}
       >
         {({ elapsedTime, color }) => (

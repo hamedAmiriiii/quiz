@@ -22,11 +22,7 @@ const Home = () => {
     {data &&
       
       <FlatList style={{width: '100%'}} showsVerticalScrollIndicator={false} data={data.slice(0 , 20)} renderItem={({item}) => <CartHome data={item} />} />
-    //   data.map((e, index) => {
-    //     if (index < 10) return <CartHome
-    //      data={e}
-    // />
-    //   })
+ 
     }
 
 

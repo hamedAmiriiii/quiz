@@ -3,7 +3,7 @@ export default {
   secondary: "#64727d",
   info: "#9DB2BF",
   text: "#DDE6ED",
-  success: "#159895",
+  success: "#03955e",
   danger: "#CD1818",
   warning: "#FF6D60",
 

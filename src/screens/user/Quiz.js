@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { View, VStack, Center, Button, Text, HStack, Box, Progress, Avatar, Image, InfoIcon } from "native-base";
+import React, { useState, useEffect, useContext } from "react";
+import { View, VStack, Center, Button, Text, HStack, Box, Progress, Avatar, Image, InfoIcon, FlatList } from "native-base";
 import { useRoute } from "@react-navigation/core";
 import axios from "axios";
 import CountdownTimer from "./CountdownTimer";
 import moment from "jalali-moment";
 import pallete from "../../utils/theme/pallete";
+import { authContext } from "../../navigation/AppNavigator";
+import useUser from "../../hooks/useUser";
 
 const Quiz = () => {
   const { params } = useRoute()
@@ -17,16 +19,17 @@ const Quiz = () => {
   const [answerOk, setAnswerOk] = useState(0);
   const [point, setPoint] = useState(0);
   const [count, setCount] = useState(0);
+  const [userIcon, setUserIcon] = useState(0);
+  const user = useUser()
 
   const startGame = (e) => {
     let data = {
-      playerId: 1,
-      gameId: 1
+      playerId: user._id,
     }
 
-    axios.post('https://quiz.iran.liara.run/game/answer', data)
+    axios.post('https://quiz.iran.liara.run/games/' +params.id +'/answer', data)
     .then(response => {
-      response.data.qustionId = "441324213242343231"
+      // response.data.qustionId = "441324213242343231"
       if (response.data) {
         
           setQustion(response.data)
@@ -45,25 +48,35 @@ const Quiz = () => {
     .catch(error => {
       // console.error('Error fetching data: ', error);
     });
-
+setInterval(() => {
+  axios.get('https://quiz.iran.liara.run/games/' +params.id +'/players')
+    .then(response => {
+      // response.data.qustionId = "441324213242343231"
+      if (response.data) {
+        setUserIcon(response.data)
+      }
+    })
+    .catch(error => {
+    });
+}, 3000);
+    
    }
 
   const answerQustion = (e) => {
     console.log("eeeeeeeee" ,e);
     let data = {
-      playerId: 1,
-      gameId: 1
+      playerId: user._id,
     }
     
       let test = qustionIds.find((w) => qustion.id == w)
       if (test == undefined) {
         setAnswerOk(true)
-        data.qId = qustion.id
+        data.qId = qustion._id
         data.answer = e
         qustionIds.push(qustion.id)
         setQustionIds(qustionIds)
 
-        if (e == qustion.qustionId[0]) {
+        if (e == qustion.questionId[5]) {
           let timer = 5
           const myInterval = setInterval(function () {
             if (timer > 0) {
@@ -73,13 +86,13 @@ const Quiz = () => {
               timer = 0
               clearInterval(myInterval);
             }
-          }, 80);
+          }, 60);
 
           setAnswerOk(e)
         } else setAnswerOk(e + 4)
         
       
-      axios.post('https://quiz.iran.liara.run/game/answer', data)
+      axios.post('https://quiz.iran.liara.run/games/' +params.id +'/answer', data)
         .then(response => {
           console.log("ddddd", response.data);
           response.data.qustionId = "441324213242343231"
@@ -91,7 +104,7 @@ const Quiz = () => {
               !inGame && setInGame(true)
               setAnswerOk(false)
 
-            }, 300);
+            }, 100);
           } else {
             setAnswerOk(false)
             setFinishGame(true)
@@ -108,7 +121,7 @@ const Quiz = () => {
   }
 
   useEffect(() => {
-    axios.get('https://quiz.iran.liara.run/game/get_game/' + params.id)
+    axios.get('https://quiz.iran.liara.run/games/' + params.id)
       .then(response => {
         setData(response.data);
 
@@ -126,7 +139,7 @@ const Quiz = () => {
   }, []);
 
 
-
+console.log("dddddddd", data);
 
   return <VStack py={2} h='full' alignItems="center">
     {timer ?
@@ -148,41 +161,34 @@ const Quiz = () => {
               }} alt="Alternate Text" />
 
               <Text fontSize={14} borderRadius={5} w="90%" minHeight={85} p={2} color='primary' ml={4} mr={4} bg={pallete.text} marginBottom={2} >
-              {qustion.id + "-"}  {qustion.body} </Text>
+                {/* {qustion.id + "-"} */}
+                {qustion.body} </Text>
             </View>
             <VStack w="90%" >
-              <Text fontSize={15} textAlign="center" borderRadius={5} w="90%" p={2} color='primary' onPress={() => answerQustion(1)} m={2} bg={answerOk == 1 ? pallete.success : answerOk == 5 ? pallete.danger : pallete.info} marginBottom={1} > {qustion.option1}</Text>
-              <Text fontSize={15} textAlign="center" borderRadius={5} w="90%" p={2} color='primary' onPress={() => answerQustion(2)} m={2} bg={answerOk == 2 ? pallete.success : answerOk == 6 ? pallete.danger : pallete.info} marginBottom={1} > {qustion.option2}</Text>
+              <Text fontSize={15} textAlign="center" borderRadius={20} w="90%" p={2} color='primary' onPress={() => answerQustion(1)} m={2} bg={answerOk == 1 ? pallete.success : answerOk == 5 ? pallete.danger : pallete.info} marginBottom={1} > {qustion.option1}</Text>
+              <Text fontSize={15} textAlign="center" borderRadius={20} w="90%" p={2} color='primary' onPress={() => answerQustion(2)} m={2} bg={answerOk == 2 ? pallete.success : answerOk == 6 ? pallete.danger : pallete.info} marginBottom={1} > {qustion.option2}</Text>
 
-              <Text fontSize={15} textAlign="center" borderRadius={5} w="90%" p={2} color='primary' onPress={() => answerQustion(3)} m={2} bg={answerOk == 3 ? pallete.success : answerOk == 7 ? pallete.danger : pallete.info} marginBottom={1} > {qustion.option3}</Text>
-              <Text fontSize={15} textAlign="center" borderRadius={5} w="90%" p={2} color='primary' onPress={() => answerQustion(4)} m={2} bg={answerOk == 4 ? pallete.success : answerOk == 8 ? pallete.danger : pallete.info} marginBottom={1} > {qustion.option4}</Text>
+              <Text fontSize={15} textAlign="center" borderRadius={20} w="90%" p={2} color='primary' onPress={() => answerQustion(3)} m={2} bg={answerOk == 3 ? pallete.success : answerOk == 7 ? pallete.danger : pallete.info} marginBottom={1} > {qustion.option3}</Text>
+              <Text fontSize={15} textAlign="center" borderRadius={20} w="90%" p={2} color='primary' onPress={() => answerQustion(4)} m={2} bg={answerOk == 4 ? pallete.success : answerOk == 8 ? pallete.danger : pallete.info} marginBottom={1} > {qustion.option4}</Text>
             </VStack>
           </Center>
-          <VStack space={1} alignItems='center' h='full' borderWidth={1} borderRadius={5} p={4} width='10%'>
-            <VStack>
-              <Avatar size='sm' />
-              <Text fontSize='xs'>asdsdf gdfas</Text>
-            </VStack>
-            <VStack>
-              <Avatar size='sm' />
-              <Text fontSize='xs'>asdas</Text>
-            </VStack>
-            <VStack>
-              <Avatar size='sm' />
-              <Text fontSize='xs'>asdas</Text>
-            </VStack>
-            <VStack>
-              <Avatar size='sm' />
-              <Text fontSize='xs'>asdas</Text>
-            </VStack>
-            <VStack>
-              <Avatar size='sm' />
-              <Text fontSize='xs'>asdas</Text>
-            </VStack>
-            <VStack>
-              <Avatar size='sm' />
-              <Text fontSize='xs'>asdas</Text>
-            </VStack>
+          <VStack space={1} alignItems='center' h='full' borderWidth={1} borderRadius={5} p={4} width='20%'>
+          <FlatList style={{ width: '100%' }} showsVerticalScrollIndicator={false} data={userIcon} renderItem={({ item }) =>
+          <VStack>
+          <Avatar size="sm" style={{ border: "unset" }} bg="green.505" source={{
+                 uri: item.user.avatar.url
+                }} />
+                <VStack>
+                 <Text fontSize='xs'>{ item.user.username}</Text>
+                  <Text fontSize='xs'>{item.point}</Text> 
+                
+              <Text fontSize='xs'>{ item.isUp && "fffff"}</Text> 
+                </VStack>
+              
+        </VStack>
+            } />
+            
+
           </VStack>
         </HStack>
 

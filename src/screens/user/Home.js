@@ -6,17 +6,16 @@ import pallete from "../../utils/theme/pallete";
 import Container from "../../components/Container";
 import axios from "axios";
 import Header from "../../components/Header";
+import { api } from "../../api";
 const Home = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    axios.get('https://quiz.iran.liara.run/tour/get_tours')
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data: ', error);
-      });
+
+    api({ url: 'games' }).then(res => {
+      setData(res.data);
+    }).catch(err => console.log(err))
+    
   }, []);
 
   return <Container>

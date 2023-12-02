@@ -20,11 +20,14 @@ const Quiz = () => {
   const [point, setPoint] = useState(0);
   const [count, setCount] = useState(0);
   const [userIcon, setUserIcon] = useState(0);
+  const [userPlayeId , setUserPlayerId] = useState()
   const user = useUser()
 
+ 
   const startGame = (e) => {
+    
     let data = {
-      playerId: user._id,
+      playerId: userPlayeId,
     }
 
     axios.post('https://quiz.iran.liara.run/games/' +params.id +'/answer', data)
@@ -65,7 +68,7 @@ setInterval(() => {
   const answerQustion = (e) => {
     console.log("eeeeeeeee" ,e);
     let data = {
-      playerId: user._id,
+      playerId: userPlayeId,
     }
     
       let test = qustionIds.find((w) => qustion.id == w)
@@ -95,7 +98,7 @@ setInterval(() => {
       axios.post('https://quiz.iran.liara.run/games/' +params.id +'/answer', data)
         .then(response => {
           console.log("ddddd", response.data);
-          response.data.qustionId = "441324213242343231"
+          // response.data.qustionId = 
 
           if (response.data) {
             setTimeout(() => {
@@ -124,6 +127,7 @@ setInterval(() => {
     axios.get('https://quiz.iran.liara.run/games/' + params.id)
       .then(response => {
         setData(response.data);
+        setUserPlayerId(response.data.players.find((e)=>e.user._id == user._id)._id)
 
         if (response.data.status != "before") {
           let timer = response.data.startTime

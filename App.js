@@ -7,6 +7,7 @@ import AppNavigator from "./src/navigation/AppNavigator";
 
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import FlashMessage from "react-native-flash-message";
 
 export default function App() {
 
@@ -20,6 +21,7 @@ export default function App() {
       <NavigationContainer>
         <AppNavigator />
       </NavigationContainer>
+      <FlashMessage position="top" />
     </NativeBaseProvider>
   );
 }

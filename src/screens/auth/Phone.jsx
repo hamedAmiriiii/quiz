@@ -17,9 +17,9 @@ const Phone = () => {
       axios.post('https://quiz.iran.liara.run/auth/send_code',data )
       .then(response => {
         if (response.data) {
-         if (response.data.status == "register" ) {
-          navigate('Register' , {phone})
-          }navigate('Login' , {phone})
+          if (response.data.status == "register") {
+            navigate('Register', { phone })
+          } else { navigate('Login', { phone }) }
           
         } else {
         }

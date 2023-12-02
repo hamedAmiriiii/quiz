@@ -1,6 +1,6 @@
 
 import React, { useState ,useEffect} from "react";
-import { AlertDialog, Avatar, Button, Center, HStack, Image, Pressable, Text, View, VStack } from "native-base";
+import { AlertDialog, Avatar, Button, Center, HStack, Image,useToast, Pressable, Text, View, VStack, Box } from "native-base";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 
 import moment from "jalali-moment";
@@ -9,6 +9,8 @@ import pallete from "../utils/theme/pallete";
 import useUser from "../hooks/useUser";
 import price from "../hooks/price";
 import { api } from "../api";
+// import useToast from "../hooks/useToast";
+
 
 
 
@@ -19,21 +21,43 @@ const CartHome = (props) => {
     const user = useUser()
     const [isOpen, setIsOpen] = React.useState(false);
     const onClose = () => setIsOpen(false);
+    const {showSuccess} = useToast()
     const cancelRef = React.useRef(null);
     const findUserInGame = data?.players?.find((e) => e.user._id == user._id)
+    const toast = useToast();
+
     const onpresss = () => {
-        
-        if (findUserInGame) {
-            navigate('Quiz' , {id:data._id})
-        } else {
-            setIsOpen(!isOpen)
-        }
+        Example()
+        // if (findUserInGame) {
+        //     navigate('Quiz' , {id:data._id})
+        // } else {
+        //     setIsOpen(!isOpen)
+        // }
     }
+
+    const Example = () => {
+        return <Center>
+            {toast.show({
+                placement: "top",
+                size:"lg",
+            render: () => {
+                return <Box bg="emerald.500" px="4"  fontSize="md" py="4"  rounded="md" mb={8}>
+                        ثبت نام با موفقیت انجام شد
+                      </Box>;
+              }
+          })}
+              
+            
+          </Center>;
+    };
+    
     const success = () => {
         
-        api({method:"post" ,url: 'game/register_game',data:{userId:user._id ,gameId:data._id}, }).then(res => {
-            // setData(res.data);
-            console.log("rrrrrr", res);
+        api({method:"post" ,url: 'games/register_game',data:{userId:user._id ,gameId:data._id}, }).then(res => {
+            // showSuccess('با موفقیت انجام شد');
+            Example()
+                onClose()
+            
         }).catch(err => console.log(err))
         // onClose()
 
@@ -79,7 +103,8 @@ const CartHome = (props) => {
                 }} max={5}>
                     {  data.players.map((e, i) => {
            return <Avatar style={{ border: "unset" }} bg="green.505" source={{
-                 uri: e.user.avatar.url
+                 uri: 'e.user.avatar.url'
+                //  uri: e.user.avatar.url
              }} />
                })                 
                     }

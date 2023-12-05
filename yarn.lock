@@ -2526,7 +2526,7 @@
   "resolved" "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.3.21.tgz"
   "version" "1.3.21"
 
-"@react-navigation/material-top-tabs@^6.6.2":
+"@react-navigation/material-top-tabs@^6.6.5":
   "integrity" "sha512-ovKc+ltWYJwu3ju5sw1txBTMemlRM85/JceSrkqU++QnL9l0TAPiPxDlO+wJddR1iwi+P6zj5/+QkXR5Ku+trw=="
   "resolved" "https://registry.npmjs.org/@react-navigation/material-top-tabs/-/material-top-tabs-6.6.5.tgz"
   "version" "6.6.5"

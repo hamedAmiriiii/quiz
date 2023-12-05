@@ -129,12 +129,12 @@ setInterval(() => {
         setData(response.data);
         setUserPlayerId(response.data.players.find((e)=>e.user._id == user._id)._id)
 
-        if (response.data.status != "before") {
+        if (response.data.status == "before") {
           let timer = response.data.startTime
           setTimer(timer)
         }
-        if (response.data.status != "start") {
-          // startGame()
+        if (response.data.status == "start") {
+          startGame()
         }
       })
       .catch(error => {
@@ -145,13 +145,13 @@ setInterval(() => {
 
 console.log("dddddddd", data);
 
-  return <VStack py={2} h='full' alignItems="center">
-    {timer ?
+  return data && <VStack py={2} h='full' alignItems="center">
+    {data.status =="before" ?
       <Center w="100%" bg="secondary" rounded="md" shadow={22}>
         <Text fontSize={20} color='#6cc4f0' marginBottom={10} > تا شروع مسابقه</Text>
         <CountdownTimer start={timer} startGame={startGame} />
       </Center>
-      : inGame ?
+      : data.status =="start"  ?
         <HStack w='full' h='full' justifyContent='center' space={2}>
           <Center w="80%" bg="secondary" rounded="md" >
             <View >
@@ -196,8 +196,8 @@ console.log("dddddddd", data);
           </VStack>
         </HStack>
 
-        : finishGame ?
-          <Center> finish</Center>
+        : data.status =="after"  ?
+          <Center> <Text>finish</Text> </Center>
           : <></>
     }
 

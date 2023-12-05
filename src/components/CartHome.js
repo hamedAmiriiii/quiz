@@ -27,12 +27,13 @@ const CartHome = (props) => {
     const toast = useToast();
 
     const onpresss = () => {
-        Example()
-        // if (findUserInGame) {
-        //     navigate('Quiz' , {id:data._id})
-        // } else {
-        //     setIsOpen(!isOpen)
-        // }
+        // Example()
+        console.log("rrrrrr" , data)
+        if (findUserInGame) {
+            navigate('Quiz' , {id:data._id})
+        } else {
+            setIsOpen(!isOpen)
+        }
     }
 
     const Example = () => {
@@ -46,22 +47,15 @@ const CartHome = (props) => {
                       </Box>;
               }
           })}
-              
-            
           </Center>;
     };
     
     const success = () => {
-        
-        api({method:"post" ,url: 'games/register_game',data:{userId:user._id ,gameId:data._id}, }).then(res => {
-            // showSuccess('با موفقیت انجام شد');
+        api({ method: "post", url: 'games/register_game', data: { userId: user._id, gameId: data._id }, }).then(res => {
+            data.players.push({user:{"_id":user._id }}) 
             Example()
-                onClose()
-            
+            onClose()
         }).catch(err => console.log(err))
-        // onClose()
-
-
          }
 
 
@@ -104,14 +98,14 @@ const CartHome = (props) => {
                     {  data.players.map((e, i) => {
            return <Avatar style={{ border: "unset" }} bg="green.505" source={{
                  uri: 'e.user.avatar.url'
-                //  uri: e.user.avatar.url
+                //  uri: e.user.avatar.url ? e.user.avatar.url :""
              }} />
                })                 
                     }
                 </Avatar.Group>
             </VStack >
             <Center pr="2" pl="2"  bg={data.startTime < moment().unix() ? pallete.success : pallete.primary} borderLeftColor={pallete.secondary} borderLeftWidth={2} >
-               <Text color={"#fff"}>{moment.unix(data.startTime).format('hh:mm')}</Text> 
+               <Text color={"#fff"}>{moment.unix(data.startTime).format('h:mm')}</Text> 
             </Center>
        </HStack>
        

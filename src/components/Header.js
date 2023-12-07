@@ -4,23 +4,24 @@ import pallete from '../utils/theme/pallete'
 import { Linking, Pressable } from 'react-native'
 import { api } from '../api'
 import useUser from '../hooks/useUser'
-
+import { useNavigation } from '@react-navigation/core'
 
 
 export default function Header() {
-
-
+    
+    const { navigate } = useNavigation()
     const user = useUser()
 
     const buy = () => {
-        api({ method:"post",
-            url: 'deposit', data: {
-                amount: 1000,
-                userId:user._id
-        } }).then(res => {
-            console.log("rrrrrrrrr", res);
-            Linking.openURL(res.data.url)
-          }).catch(err => console.log(err))
+        navigate('Buy' )
+        // api({ method:"post",
+        //     url: 'deposit', data: {
+        //         amount: 1000,
+        //         userId:user._id
+        // } }).then(res => {
+        //     console.log("rrrrrrrrr", res);
+        //     Linking.openURL(res.data.url)
+        //   }).catch(err => console.log(err))
     }
   return (
    
